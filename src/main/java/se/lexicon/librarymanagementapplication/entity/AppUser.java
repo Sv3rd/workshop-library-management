@@ -6,9 +6,17 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Entity(name = "app_user")
+@Entity
 @Getter
 public class AppUser {
+
+    public AppUser(String username, String password, LocalDate regDate, Details details) {
+        this.username = username;
+        this.password = password;
+        this.regDate = regDate;
+        this.details = details;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int appUserId;
@@ -24,4 +32,5 @@ public class AppUser {
     @OneToOne
     @JoinColumn(name = "detailsId")
     private Details details;
+    
 }
