@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -32,5 +34,5 @@ public class AppUser {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "detailsId")
     private Details details;
-    
+
 }
