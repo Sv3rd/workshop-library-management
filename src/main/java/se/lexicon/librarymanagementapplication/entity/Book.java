@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 
 @Entity
 @Getter
@@ -32,5 +35,8 @@ public class Book {
 
     @Column(nullable = false)
     private int maxLoanDays;
+
+    @ManyToMany(mappedBy = "writtenBooks")
+    private Set<Author> authors = new HashSet<>();
 
 }
