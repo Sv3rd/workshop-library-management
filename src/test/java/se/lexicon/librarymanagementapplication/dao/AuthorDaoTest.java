@@ -5,10 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
-import se.lexicon.librarymanagementapplication.entity.AppUser;
 import se.lexicon.librarymanagementapplication.entity.Author;
 import se.lexicon.librarymanagementapplication.entity.Book;
-import se.lexicon.librarymanagementapplication.entity.Details;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -21,6 +19,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AuthorDaoTest {
     @Autowired
     AuthorDAO authorDAO;
+
+    @Autowired
+    BookDAO bookDAO;
 
     @Test
     public void test_PersistAuthor() {
@@ -50,9 +51,13 @@ public class AuthorDaoTest {
     public void test_updateAuthor() {
         Author author = new Author("Maik", "Bahko");
         authorDAO.create(author);
+        Book book = new Book("ABC", "Alphabet Book", 15);
+        bookDAO.create(book);
         author.setLastName("B");
+        author.getWrittenBooks().add(book);
         assertNotNull(author);
         assertEquals("B", author.getLastName());
+        assertEquals(1,author.getWrittenBooks().size());
     }
 
     @Test
@@ -63,5 +68,17 @@ public class AuthorDaoTest {
         Author author1 = authorDAO.findById(author.getAuthorId());
         assertNull(author1);
     }
+
+    @Test
+    public void testAddBook() {
+        Author author = new Author("Maik", "Bahko");
+        Book book = new Book("ABC", "Rhymes Book", 15);
+        author.addBook(book);
+        authorDAO.create(author);
+        assertEquals(1, author.getWrittenBooks().size());
+        assertTrue(book.getAuthors().contains(author));
+    }
+
+
 
 }

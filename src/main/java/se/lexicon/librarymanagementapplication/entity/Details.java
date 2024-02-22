@@ -7,6 +7,8 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Details {
 
     public Details(String email, String name, LocalDate birthDate) {

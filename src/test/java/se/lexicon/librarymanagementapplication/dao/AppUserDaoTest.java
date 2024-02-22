@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import se.lexicon.librarymanagementapplication.entity.AppUser;
+import se.lexicon.librarymanagementapplication.entity.BookLoan;
 import se.lexicon.librarymanagementapplication.entity.Details;
 
 import java.time.LocalDate;
@@ -70,6 +71,17 @@ public class AppUserDaoTest {
         AppUser appUser1 = appUserDAO.findById(appUser.getAppUserId());
         assertNull(appUser1);
     }
+
+    @Test
+    public void testAddBookLoan(){
+        Details details = new Details("test.t@se.com", "test", LocalDate.parse("1990-07-11"));
+        AppUser appUser = new AppUser("test123","test@123", LocalDate.now(), details);
+        appUserDAO.create(appUser);
+        BookLoan loan = new BookLoan(LocalDate.now(), LocalDate.parse("2024-02-27"), false);
+        appUser.addBookLoan(loan);
+        assertEquals(1,appUser.getLoans().size());
+    }
+
 
 
 }

@@ -16,6 +16,11 @@ import java.util.Set;
 @AllArgsConstructor
 public class Author {
 
+    public Author(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -34,9 +39,8 @@ public class Author {
             inverseJoinColumns = @JoinColumn(name = "bookId")
     )
     private Set<Book> writtenBooks = new HashSet<>();
-
-    public Author(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public void addBook(Book book){
+        this.writtenBooks.add(book);
+        book.getAuthors().add(this);
     }
 }

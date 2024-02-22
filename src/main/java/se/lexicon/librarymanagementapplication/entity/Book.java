@@ -35,7 +35,11 @@ public class Book {
     @Column(nullable = false)
     private int maxLoanDays;
 
-    @ManyToMany(mappedBy = "writtenBooks")
+    @ManyToMany(mappedBy = "writtenBooks", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Author> authors = new HashSet<>();
 
+    public void addAuthor(Author author){
+        this.authors.add(author);
+        author.getWrittenBooks().add(this);
+    }
 }

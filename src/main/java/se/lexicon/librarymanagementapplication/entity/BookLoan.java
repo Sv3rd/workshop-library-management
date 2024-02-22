@@ -12,6 +12,12 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class BookLoan {
 
+    public BookLoan(LocalDate loanDate, LocalDate dueDate, boolean returned) {
+        this.loanDate = loanDate;
+        this.dueDate = dueDate;
+        this.returned = returned;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int loanId;

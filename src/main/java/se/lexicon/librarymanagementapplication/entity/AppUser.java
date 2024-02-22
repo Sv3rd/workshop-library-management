@@ -1,7 +1,9 @@
 package se.lexicon.librarymanagementapplication.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -10,6 +12,8 @@ import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class AppUser {
 
     public AppUser(String username, String password, LocalDate regDate, Details details) {
@@ -35,4 +39,10 @@ public class AppUser {
     @JoinColumn(name = "detailsId")
     private Details details;
 
+    @OneToMany(mappedBy = "loanId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<BookLoan> loans = new ArrayList<>();
+
+    public void addBookLoan(BookLoan bookLoan) {
+        this.loans.add(bookLoan);
+    }
 }
